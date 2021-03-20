@@ -1,50 +1,17 @@
-import React from 'react';
-import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
-import {
-  Platform,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+// @ts-nocheck
+import React from "react";
+import { StatusBar as ExpoStatusBar } from "expo-status-bar";
+import { RestaurantsScreen } from "./src/features/restaurants/screens/restaurants.screen";
+import { ThemeProvider } from "styled-components/native";
+import { theme } from "./src/infrastructure/theme/index";
 
 export default function App() {
   return (
     <>
-      <SafeAreaView
-        style={{
-          flex: 1,
-          marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-        }}
-      >
-        <View style={{ padding: 16, backgroundColor: 'green' }}>
-          <Text>search</Text>
-        </View>
-        <View style={{ flex: 1, padding: 16, backgroundColor: 'blue' }}>
-          <Text>list</Text>
-        </View>
-      </SafeAreaView>
-      <ExpoStatusBar style="auto" />
-      {/* <StatusBar /> */}
+      <ThemeProvider theme={theme}>
+        <RestaurantsScreen />
+        <ExpoStatusBar style="auto" />
+      </ThemeProvider>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  search: {
-    flex: 1,
-    flexGrow: 1,
-    backgroundColor: 'green',
-  },
-  list: {
-    flex: 1,
-    flexGrow: 1,
-    backgroundColor: 'blue',
-  },
-});
