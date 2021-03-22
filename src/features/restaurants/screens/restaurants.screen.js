@@ -1,49 +1,53 @@
 // @ts-nocheck
-import React from "react";
-import { Searchbar } from "react-native-paper";
+import React, { useContext } from "react";
+import { Text } from "react-native";
+import { ActivityIndicator, Colors } from "react-native-paper";
 import styled from "styled-components/native";
 import { Spacer } from "../../../components/spacer/spacer.component";
 import { SafeArea } from "../../../components/utility/safe-area.component";
+import { RestaurantsContext } from "../../../services/restaurant/restaurant.context";
 import { RestaurantInfoCard } from "../components/restaurant-info-card.component";
-
-const SearchContainer = styled.View`
-  padding: ${(props) => props.theme.space[3]};
-`;
+import { Search } from "../components/search.component";
 
 const FlatListView = styled.FlatList.attrs({
-  contentContainerStyle: { padding: 16 },
+  contentContainerStyle: { paddingHorizontal: 16 },
 })``;
 
+const LoadingContainer = styled.View`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+`;
+
+const Loading = styled(ActivityIndicator)`
+  margin-left: -25px;
+`;
+
 export const RestaurantsScreen = () => {
+  const { restaurants, isLoading, error } = useContext(RestaurantsContext);
   return (
     <SafeArea>
-      <SearchContainer>
-        <Searchbar value="" />
-      </SearchContainer>
-      <FlatListView
-        data={[
-          { name: 1 },
-          { name: 2 },
-          { name: 3 },
-          { name: 4 },
-          { name: 5 },
-          { name: 6 },
-          { name: 7 },
-          { name: 8 },
-          { name: 9 },
-          { name: 10 },
-          { name: 11 },
-          { name: 12 },
-          { name: 13 },
-          { name: 14 },
-        ]}
-        renderItem={() => (
-          <Spacer position="bottom" size="large">
-            <RestaurantInfoCard />
-          </Spacer>
-        )}
-        keyExtractor={(item) => item.name.toString()}
-      />
+      <Search />
+      {error && <Text>{error.message}</Text>}
+      {isLoading ? (
+        <LoadingContainer>
+          <Loading size={50} animating={true} color={Colors.blue300} />
+        </LoadingContainer>
+      ) : (
+        <FlatListView
+          data={restaurants}
+          renderItem={({ item }) => {
+            return (
+              <Spacer position="bottom" size="large">
+                <RestaurantInfoCard restaurant={item} />
+              </Spacer>
+            );
+          }}
+          keyExtractor={(item) =>
+            item.name ? item.name.toString() : item.toString()
+          }
+        />
+      )}
     </SafeArea>
   );
 };
