@@ -1,9 +1,10 @@
 // @ts-nocheck
 import React, { useContext } from "react";
-import { Text } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { ActivityIndicator, Colors } from "react-native-paper";
 import styled from "styled-components/native";
 import { Spacer } from "../../../components/spacer/spacer.component";
+import { Text } from "../../../components/typography/text.component";
 import { SafeArea } from "../../../components/utility/safe-area.component";
 import { RestaurantsContext } from "../../../services/restaurant/restaurant.context";
 import { RestaurantInfoCard } from "../components/restaurant-info-card.component";
@@ -23,7 +24,7 @@ const Loading = styled(ActivityIndicator)`
   margin-left: -25px;
 `;
 
-export const RestaurantsScreen = () => {
+export const RestaurantsScreen = ({ navigation }) => {
   const { restaurants, isLoading, error } = useContext(RestaurantsContext);
   return (
     <SafeArea>
@@ -38,9 +39,15 @@ export const RestaurantsScreen = () => {
           data={restaurants}
           renderItem={({ item }) => {
             return (
-              <Spacer position="bottom" size="large">
-                <RestaurantInfoCard restaurant={item} />
-              </Spacer>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("RestaurantDetail", { restaurant: item })
+                }
+              >
+                <Spacer position="bottom" size="large">
+                  <RestaurantInfoCard restaurant={item} />
+                </Spacer>
+              </TouchableOpacity>
             );
           }}
           keyExtractor={(item) =>
