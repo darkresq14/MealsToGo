@@ -1,6 +1,7 @@
 // @ts-nocheck
 import React from "react";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import styled from "styled-components/native";
 import { CompactRestaurantInfo } from "../restaurant/compact-restaurant-info.component";
 import { Spacer } from "../spacer/spacer.component";

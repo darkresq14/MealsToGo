@@ -10,11 +10,8 @@ import { SafeArea } from "../../../components/utility/safe-area.component";
 import { FavoritesContext } from "../../../services/favorites/favorites.context";
 import { RestaurantsContext } from "../../../services/restaurant/restaurant.context";
 import { RestaurantInfoCard } from "../components/restaurant-info-card.component";
+import { FlatListView } from "../components/restaurant-list.styles";
 import { Search } from "../components/search.component";
-
-const FlatListView = styled.FlatList.attrs({
-  contentContainerStyle: { paddingHorizontal: 16 },
-})``;
 
 const LoadingContainer = styled.View`
   position: absolute;
